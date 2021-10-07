@@ -11,7 +11,7 @@ describe('authentication-04 routes', () => {
   // const signUpData = { email: 'bishop@kaine.com', password: 'dearlordbabyjesus' };
 
   it('POST route to /signup that responds with a newly created Users id', async () => {
-    const res = await request(app).post('/api/v1/signup').send({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
+    const res = await request(app).post('/api/v1/auth/signup').send({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
 
     expect(res.body).toEqual({
       id: expect.any(String),
