@@ -45,7 +45,20 @@ describe('authentication-04 routes', () => {
       { email: 'bishop@WRONG.com', password: 'dearlordinfantjesus' }
     );
     expect(res.status).toBe(401);
-  });
+  }); 
+
+  it('GET route to /me that responds with the currently logged in User', async () => {
+    await User.createUser({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
+    const agent = request.agent(app);
+    await agent.post('/api/v1/auth/login').send({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
+    const res = await request(app).agent('/api/v1/auth/me').send();
+    
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      email: 'bishop@kaine.com',
+    });
+  }); 
+
 
   afterAll(() => {
     pool.end();
