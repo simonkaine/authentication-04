@@ -39,6 +39,14 @@ describe('authentication-04 routes', () => {
     });
   });
 
+  it('If credentials are incorrect, return 401', async () => {
+    await User.createUser({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
+    const res = await request(app).post('/api/v1/auth/login').send(
+      { email: 'bishop@WRONG.com', password: 'dearlordinfantjesus' }
+    );
+    expect(res.status).toBe(401);
+  });
+
   afterAll(() => {
     pool.end();
   });
