@@ -51,8 +51,8 @@ describe('authentication-04 routes', () => {
     await User.createUser({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
     const agent = request.agent(app);
     await agent.post('/api/v1/auth/login').send({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
-    const res = await request(app).agent('/api/v1/auth/me').send();
-    
+    const res = await agent.get('/api/v1/auth/me');
+
     expect(res.body).toEqual({
       id: expect.any(String),
       email: 'bishop@kaine.com',
