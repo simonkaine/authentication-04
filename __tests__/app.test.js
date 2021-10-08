@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
+const User = require('../lib/services/user-service');
 
 describe('authentication-04 routes', () => {
   beforeEach(() => {
@@ -17,6 +18,14 @@ describe('authentication-04 routes', () => {
       id: expect.any(String),
       email: 'bishop@kaine.com',
     });
+  });
+
+  it('If the email already exists, return 400', async () => {
+    await User.createUser({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
+    const res = await request(app).post('/api/v1/auth/signup').send(
+      { email: 'bishop@kaine.com', password: 'dearlordbabyjesus' }
+    );
+    expect(res.status).toBe(400);
   });
 
   afterAll(() => {
