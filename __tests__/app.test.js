@@ -28,6 +28,17 @@ describe('authentication-04 routes', () => {
     expect(res.status).toBe(400);
   });
 
+  it('POST route to /login that responds with the existing Users id', async () => {
+    await User.createUser({ email: 'bishop@kaine.com', password: 'dearlordbabyjesus' });
+    const res = await request(app).post('/api/v1/auth/login').send(
+      { email: 'bishop@kaine.com', password: 'dearlordbabyjesus' }
+    );
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      email: 'bishop@kaine.com',
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });
