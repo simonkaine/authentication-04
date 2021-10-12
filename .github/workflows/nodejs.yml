@@ -19,3 +19,4 @@ jobs:
         CI: true
         DATABASE_URL: postgres://alchemy:alchemy@postgres:5432/alchemy
         SECRET_KEY: ${{secrets.SECRET_KEY}}
+        Salt_Rounds: ${{secrets.Salt_Rounds}}
